@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--java.io.FileNotFoundException: class path resource [beans.xml] cannot be opened because it does not exit.
+    在用maven管理的spring项目中做单元测试时候，加载不了spring的配置文件。出现该问题的原因是，
+    用maven创建的项目，必须把spring的配置文件beans.xml或者applicationContext.xml放到系统根目录下，
+    maven项目的系统根目录默认是src/main/java和src/main/resources，而不是src。
+    所以beans.xml文件必须放到src/main/java和src/main/resources下面的文件夹或者包中，
+    否则就会报上面的错-->
+    <bean id="knight" class="com.ascland.chapter01.BraveKnight">
+        <constructor-arg ref="quest"/>
+    </bean>
+
+
+    <bean id="quest" class="com.ascland.chapter01.SlayDragonQuest">
+        <constructor-arg value="#{T(System).out}"/>
+    </bean>
+
+    <bean id="minstrel" class="com.ascland.chapter01.Minstrel">
+        <constructor-arg value="#{T(System).out}"/>
+    </bean>
+
+    <!-- proxy-target-class="true"
+    Spring的文档中这么写的：Spring AOP部分使用JDK动态代理或者CGLIB来为目标对象创建代理。
+    如果被代理的目标实现了至少一个接口，则会使用JDK动态代理。所有该目标类型实现的接口都将被代理。
+    若该目标对象没有实现任何接口，则创建一个CGLIB代理。
+
+    所以，解决办法是，如果用JDK动态代理，就必须为被代理的目标实现一个接口（要注意的地方是：需要将
+    ctx.getBean()方法的返回值用接口类型接收）；如果使用CGLIB强制代理，就必选事先将CGLIB包导入项目，
+    设置beanNameAutoProxyCreator的proxyTargetClass属性为true。
+
+    这里BraveKnight实现了接口Knight，所以会使用JDK动态代理，从而使(BraveKnight) knight强制转换的时候报错（
+    因为实现Knight接口的代理类是属于BraveKnight子类）。因此需要使用CGLIB强制代理，需要在增加以上配置-->
+    <aop:config proxy-target-class="true">
+        <aop:aspect ref="minstrel">
+            <aop:pointcut id="embark" expression="execution(* *.embarkOnQuest(..))"/>
+            <aop:before pointcut-ref="embark" method="singBeforeQuest"/>
+            <aop:after pointcut-ref="embark" method="singAfterQuest"/>
+        </aop:aspect>
+        <!--<aop:advisor advice-ref="" pointcut-ref=""/>-->
+    </aop:config>
+</beans>
