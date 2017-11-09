@@ -13,16 +13,16 @@
     用maven创建的项目，必须把spring的配置文件beans.xml或者applicationContext.xml放到系统根目录下，
     maven项目的系统根目录默认是src/main/java和src/main/resources，而不是src。
     所以beans.xml文件必须放到src/main/java和src/main/resources下面的文件夹或者包中，
-    否则就会报上面的错-->
+    否则就会报上面的错。在Intellij IDEA中，拷贝配置文件的relative path，可以得到其类路径：右键|Copy Relative Path-->
     <bean id="knight" class="com.ascland.chapter01.BraveKnight">
         <constructor-arg ref="quest"/>
     </bean>
-
 
     <bean id="quest" class="com.ascland.chapter01.SlayDragonQuest">
         <constructor-arg value="#{T(System).out}"/>
     </bean>
 
+    <!--声明bean-->
     <bean id="minstrel" class="com.ascland.chapter01.Minstrel">
         <constructor-arg value="#{T(System).out}"/>
     </bean>
@@ -39,9 +39,13 @@
     这里BraveKnight实现了接口Knight，所以会使用JDK动态代理，从而使(BraveKnight) knight强制转换的时候报错（
     因为实现Knight接口的代理类是属于BraveKnight子类）。因此需要使用CGLIB强制代理，需要在增加以上配置-->
     <aop:config proxy-target-class="true">
+        <!--将Minstrel声明为一个切面类-->
         <aop:aspect ref="minstrel">
+            <!--定义 切点-->
             <aop:pointcut id="embark" expression="execution(* *.embarkOnQuest(..))"/>
+            <!--声明前置通知-->
             <aop:before pointcut-ref="embark" method="singBeforeQuest"/>
+            <!--声明后置通知-->
             <aop:after pointcut-ref="embark" method="singAfterQuest"/>
         </aop:aspect>
         <!--<aop:advisor advice-ref="" pointcut-ref=""/>-->
