@@ -11,14 +11,38 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CDPlayerConfig2 {
   
+//  @Bean
+//  public CompactDisc compactDisc() {
+//    return new SgtPeppers();
+//  }
+
   @Bean
-  public CompactDisc compactDisc() {
+  public CompactDisc sgtPeppers() {
     return new SgtPeppers();
   }
-  
+
+//  @Bean
+//  public CDPlayer cdPlayer() {
+//    return new CDPlayer(sgtPeppers());
+//  }
+//
+//  @Bean
+//  public CDPlayer anotherCDPlayer() {
+//    return new CDPlayer(sgtPeppers());
+//  }
+
+  //最佳方式
   @Bean
   public CDPlayer cdPlayer(CompactDisc compactDisc) {
     return new CDPlayer(compactDisc);
   }
+
+//  通过setter方法注入
+//  @Bean
+//  public CDPlayer cdPlayer(CompactDisc compactDisc) {
+//    CDPlayer cdPlayer = new CDPlayer(compactDisc);
+//    cdPlayer.setCompactDisc(compactDisc);
+//    return cdPlayer;
+//  }
 
 }
