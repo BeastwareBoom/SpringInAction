@@ -9,5 +9,12 @@
             window.android.scan();
         }
     }
+
+    function openapp() {
+        document.getElementById('divOpen').innerHTML = '<iframe src="tuanlemei://platformapi/startApp"></iframe>';
+    }
 </script>
+
+<div style="display:none;" id="divOpen"></div>
+<input type="button" value="打开app" onclick="openapp();">
 </html>
