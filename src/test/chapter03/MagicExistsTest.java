@@ -1,7 +1,7 @@
 package chapter03;
 
-import com.ascland.chapter03.MagicBean;
 import com.ascland.chapter03.MagicConfig;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,6 @@ public class MagicExistsTest {
     @Autowired
     private ApplicationContext context;
 
-    //    @Autowired
-//    MagicBean magicBean;
     /*
      * This test will fail until you set a "magic" property.
      * You can set this property as an environment variable, a JVM system property, by adding a @BeforeClass
@@ -30,6 +28,12 @@ public class MagicExistsTest {
 
         //根据magicBean()方法生成
         assertTrue(context.containsBean("magicBean"));
+    }
+
+    @BeforeClass
+    public static void setMagicProperty() {
+        //本例中，不检查magic属性值，存在此属性即可
+        System.setProperty("magic", "MAGIC");
     }
 
 }
