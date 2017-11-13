@@ -1,26 +1,34 @@
 package com.ascland.chapter03.externals;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.env.Environment;
 
 @Configuration
 @PropertySource("classpath:properties/externals.properties")
 public class EnvironmentPropertiesAnnotationConfig {
 
-    @Autowired
-    Environment env;
+    /*
+    @Value("${disc.title}")
+    private String title;
+    @Value("${disc.artist}")
+    private String artist;
+*/
+
+    /**/
+    @Value("#{configProperties['disc.title']}")
+    private String title;
+
+    @Value("#{configProperties['disc.artist']}")
+    private String artist;
+
 
     @Bean
     public BlankDisc blankDisc() {
-        return new BlankDisc(
-                env.getProperty("disc.title"),
-                env.getProperty("disc.artist"));
+        return new BlankDisc(title, artist);
     }
-
 
 
     @Bean

@@ -6,14 +6,29 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
+    <!--${}方式
     <context:property-placeholder
             location="properties/externals.properties"/>
 
     <bean class="com.ascland.chapter03.externals.BlankDisc"
           c:_0="${disc.title}"
           c:_1="${disc.artist}"/>
+    -->
 
-    <!--<bean class="com.ascland.chapter03.externals.BlankDisc"-->
-    <!--c:_0="#{systemProperties['disc.title']}"-->
-    <!--c:_1="#{systemProperties['disc.title']}"/>-->
+
+    <!--#{}配置方式-->
+    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath*:properties/externals.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="configProperties"/>
+    </bean>
+
+    <bean class="com.ascland.chapter03.externals.BlankDisc"
+          c:_0="#{configProperties['disc.title']}"
+          c:_1="#{configProperties['disc.artist']}"/>
 </beans>

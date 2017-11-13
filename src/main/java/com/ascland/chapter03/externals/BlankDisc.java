@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class BlankDisc {
 
+//    @Value("${disc.title}")
     private String title;
+//    @Value("${disc.artist}")
     private String artist;
 
 //    public BlankDisc(@Value("${disc.title}") String title,
