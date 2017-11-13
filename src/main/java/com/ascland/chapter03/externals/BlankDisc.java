@@ -3,6 +3,8 @@ package com.ascland.chapter03.externals;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.inject.Inject;
+
 public class BlankDisc {
 
 //    @Value("${disc.title}")
