@@ -1,5 +1,6 @@
 package com.ascland.chapter04;
 
+import com.ascland.chapter04.function.EncoreableIntroducer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -11,7 +12,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy//启用AspectJ自动代理
 public class PerformanceConfig {
     @Bean
-    public Piano piano() {
+    public Performance piano() {
         return new Piano();
     }
 
@@ -20,4 +21,8 @@ public class PerformanceConfig {
         return new Audience();
     }
 
+    @Bean
+    public EncoreableIntroducer introducer(){
+        return new EncoreableIntroducer();
+    }
 }
