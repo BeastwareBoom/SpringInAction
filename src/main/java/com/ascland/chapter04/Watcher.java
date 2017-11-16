@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Pointcut;
 /**
  * 创建环绕通知
  */
-@Aspect
+//@Aspect
 public class Watcher {
 
     //定义命名的切点
@@ -24,7 +24,8 @@ public class Watcher {
             point.proceed();
             //可以多次调用proceed()方法，会多次执行perform()方法
             //point.proceed();
-            System.out.println("Clap clap clap!");
+//            int i = 1/0;
+            System.out.println("Clap clap clap!!!");
         } catch (Throwable e) {
             System.out.println("Demand a refund.");
         }

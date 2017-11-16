@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 为切入点传递参数
  */
-@Aspect
+//@Aspect
 public class TrackCounter {
 
     private Map<Integer, Integer> trackCounts = new HashMap<Integer, Integer>();

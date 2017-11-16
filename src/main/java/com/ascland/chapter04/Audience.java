@@ -5,7 +5,7 @@ import org.aspectj.lang.annotation.*;
 /**
  * Created by Asus on 2017/11/15.
  */
-@Aspect
+//@Aspect
 public class Audience {
 
     //定义命名的切点

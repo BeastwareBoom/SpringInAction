@@ -7,6 +7,8 @@ import java.util.List;
  */
 public class CompactDisc {
 
+    private String title;
+    private String name;
     private List<String> tracks;
 
     public void playTrack(int trackNumber) {
@@ -19,5 +21,21 @@ public class CompactDisc {
 
     public void setTracks(List<String> tracks) {
         this.tracks = tracks;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

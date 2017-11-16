@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="piano" class="com.ascland.chapter04.Piano"/>
+
+    <!--与delegate-ref一起使用-->
+    <!--<bean id="defaultEncoreable" class="com.ascland.chapter04.function.DefaultEncoreable"/>-->
+
+    <aop:config>
+        <aop:aspect>
+            <!--两种实现方式：delegate-ref或default-impl，前者需要引用bean defaultEncoreable，这里有问题-->
+            <!--delegate-ref="defaultEncoreable"-->
+            <!--default-impl="com.ascland.chapter04.function.DefaultEncoreable"-->
+            <aop:declare-parents types-matching="com.ascland.chapter04.Performance+"
+                                 implement-interface="com.ascland.chapter04.function.Encoreable"
+                                 default-impl="com.ascland.chapter04.function.DefaultEncoreable"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

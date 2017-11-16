@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--在本例中使用完全的xml配置，需要将包扫描注释掉，且需要将组件类上@Aspect注释，避免多次-->
+    <!--<context:component-scan base-package="com.ascland.chapter04"/>-->
+    <!--启用AspectJ自动代理-->
+    <!--<aop:aspectj-autoproxy/>-->
+
+    <!--声明Audience bean-->
+    <bean id="audience" class="com.ascland.chapter04.Audience"/>
+
+    <bean id="performance" class="com.ascland.chapter04.Piano"/>
+
+    <aop:config>
+        <!--引用audience bean-->
+        <aop:aspect ref="audience">
+            <!--定义切点，抽取出重复的pointcut="execution(* com.ascland.chapter04.Performance.perform(..))"-->
+            <aop:pointcut id="perform" expression="execution(* com.ascland.chapter04.Performance.perform(..))"/>
+
+            <!--引用切点pointcut-ref-->
+            <aop:before method="silencingCellPhones" pointcut-ref="perform"/>
+
+            <!--<aop:before method="silencingCellPhones"-->
+            <!--pointcut="execution(* com.ascland.chapter04.Performance.perform(..))"/>-->
+
+            <aop:after-returning method="applause" pointcut-ref="perform"/>
+
+            <aop:after-throwing method="demandRefund" pointcut-ref="perform"/>
+
+        </aop:aspect>
+    </aop:config>
+</beans>
